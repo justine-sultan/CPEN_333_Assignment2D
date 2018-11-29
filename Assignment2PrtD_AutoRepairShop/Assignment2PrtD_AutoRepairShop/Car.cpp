@@ -42,7 +42,7 @@ void Car::addTires(char* make, int size)
 	for (int i = 0; i < 3; i++) {
 		tireArray[i] = new Tire(1, make, 5); 
 	}
-	tireArray[3] = new Tire(0, make, 5);		//create tire 4 as worn for demo
+	tireArray[3] = new Tire(0, make, 5);		//Note: creating tire 4 as "worn" for demo (so that technician can swap out tire)
 }
 
 Tire* Car::swapTire(int tireNum, Tire* newTire)

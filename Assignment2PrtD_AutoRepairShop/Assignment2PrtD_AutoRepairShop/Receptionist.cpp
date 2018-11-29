@@ -4,23 +4,23 @@
 #include "Receptionist.h"
 #include <stdio.h>
 #include <string.h>
-//#include <Windows.h>
 #include "..\DataStructures.h"
 #include "..\rt.h"
 
 Receptionist::Receptionist()
 {
 	custServiceRecord = nullptr;	//not in charge of memory - passes through
-	custCar = nullptr;	//not in charge of memory - passes through
-	custInvoice = nullptr;			//in charge of memory - must delete at end of customer transaction
-	custJobSheet = nullptr;			//in charge of memory - must delete at end of customer transaction
+	custCar = nullptr;				//not in charge of memory - passes through
+	custInvoice = nullptr;			//not in charge of memory - passes through
+	custJobSheet = nullptr;			//not in charge of memory - passes through
 }
 
 
 Receptionist::~Receptionist()
 {
-	//deleting/freeing memory will be dealt 
-	//with in processPayment function (Receptionist unlinks with customer)
+	//Note: deleting/freeing memory will be dealt with in processPayment function (Receptionist unlinks with customer)
+	printf("Entering receptionist destructor \n");
+	return;
 }
 
 void Receptionist::makeCoffee(void) {
@@ -65,40 +65,21 @@ void Receptionist::stampServiceRecord(void) {
 }
 
 void Receptionist::getCarServiced(Car* custCarP, struct serviceRecord* custServiceRecordP) {
-	//todo: this will use a pipeline to send data to main() where everything else will be processed
 	printf("Receptionist getting car and service record \n");
 	getchar();
 	CPipe custToRec("custToRec", 1024);
 	custToRec.Write(&custCarP, sizeof(custCarP));
 	custToRec.Write(&custServiceRecordP, sizeof(custServiceRecordP));
-	/*
-	custServiceRecord = custServiceRecordP; 
-	custCar = custCarP; 
-	printf("Receptionist sending car to technician\n");
-	getchar();
-	technician->serviceCar(custCar); 
-	makeCoffee();
-	printf("Receptionist retrieving car and jobsheet from technician\n");
-	getchar();
-	custCar = technician->getCar();
-	custJobSheet = technician->getJobSheet(); 
-	generateInvoice();
-	stampServiceRecord();
-	printf("Receptionist ready to hand off to customer\n");
-	getchar();*/
 
 	return; 
 }
 
 struct invoice* Receptionist::getInvoice(void) {
-	//Todo: this will just wait on the pipeline for the receptionist to send the below info, get the info, then return it
-	//same with the other 3
 	CPipe recToCust("recToCust", 1024);
 	struct invoice* temp; 
 	recToCust.Read(&temp, sizeof(temp));
 	return temp;
 
-	//return custInvoice; 
 }
 
 Jobsheet* Receptionist::getJobsheet(void) {
@@ -107,7 +88,6 @@ Jobsheet* Receptionist::getJobsheet(void) {
 	recToCust.Read(&temp, sizeof(temp));
 	return temp;
 
-	//return custJobSheet;
 }
 
 struct serviceRecord* Receptionist::getServiceRecord(void) {
@@ -116,7 +96,6 @@ struct serviceRecord* Receptionist::getServiceRecord(void) {
 	recToCust.Read(&temp, sizeof(temp));
 	return temp;
 
-	//return custServiceRecord;
 }
 
 Car* Receptionist::processPayment(float payment) {
@@ -128,11 +107,13 @@ Car* Receptionist::processPayment(float payment) {
 	else {
 		printf("Receptionist returning car\n");
 		getchar(); 
-		delete custInvoice;
-		delete custJobSheet;
-		custServiceRecord = nullptr;	//assume that customer has taken service record back	
+		//delete custInvoice;
+		//delete custJobSheet;
+		custInvoice = nullptr;			//Assume invoice handed off to customer to keep
+		custJobSheet = nullptr;			//Assume jobsheet handed off to customer to keep
+		custServiceRecord = nullptr;	//Assume that customer has taken service record back	
 		Car* temp = custCar;
-		custCar = nullptr;				//assume that customer has taken car back
+		custCar = nullptr;				//Assume that customer has taken car back
 		return temp; 
 	}
 }
@@ -141,8 +122,6 @@ int Receptionist::main(void)
 {
 	CPipe custToRec("custToRec", 1024); 
 	CPipe recToCust("recToCust", 1024);
-	//CPipe techToRec("techToRec", 1024);
-	//CPipe recToTech("recToTech", 1024);
 	
 	while (1) {
 		custToRec.Read(&custCar, sizeof(custCar));

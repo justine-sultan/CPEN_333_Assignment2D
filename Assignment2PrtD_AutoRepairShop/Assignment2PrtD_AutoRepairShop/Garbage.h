@@ -8,10 +8,10 @@ class Garbage
 {
 
 public:
-	Garbage();
-	~Garbage();
+	Garbage();								//Constructor
+	~Garbage();								//Destructor
 
-	void disposeFilter(int* filter); 
+	void disposeFilter(int* filter);		//Input: filter to dispose of. Disposes of filter (deletes filter object)
 };
 
 #endif 

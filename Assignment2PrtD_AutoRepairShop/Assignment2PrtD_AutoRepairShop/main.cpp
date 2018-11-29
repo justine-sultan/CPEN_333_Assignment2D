@@ -1,10 +1,6 @@
 //Justine Sultan
 //Student Number 35880146
 
-//first create car (and tires) and service record of customer
-//then create all objects
-//then link all objects with association fxns
-
 #include <stdio.h>
 #include "Car.h"
 #include "Receptionist.h"
@@ -13,7 +9,7 @@
 
 int main() {
 	printf("Generating Auto shop...\n");
-	Receptionist receptionist;				//create the auto shop
+	Receptionist receptionist;					//create the auto shop
 	receptionist.Resume(); 
 	Technician technician;
 	technician.Resume(); 
@@ -24,7 +20,7 @@ int main() {
 	technician.addAsociations(&garbage, &recycling, &stores);
 
 	printf("Generating customer (your) paramaters...\n");
-	Car* myCar = new Car;					//create customer objects
+	Car* myCar = new Car;						//create customer objects
 	char tireMake[4] = "ABC";
 	myCar->addTires(tireMake, 8); 
 	struct serviceRecord* myServiceRecord = new struct serviceRecord; 
@@ -39,12 +35,12 @@ int main() {
 
 	printf("Press enter to give car and service record to receptionist \n");
 	getchar(); 
-	receptionist.getCarServiced(myCar, myServiceRecord);			//car gets serviced
+	receptionist.getCarServiced(myCar, myServiceRecord);					//Car gets serviced. Customer leaves for a bit then comes back
 	printf("Customer is leaving shop (15 seconds) while waiting for car to be serviced \n");
 	Sleep(15000); 
 	printf("Customer has arrived back at the shop and will get transaction documents as soon as they are ready\n");
 
-	struct invoice* myInvoice = receptionist.getInvoice();			//get transaction documents back 
+	struct invoice* myInvoice = receptionist.getInvoice();					//Get transaction documents back and read (print) them
 	Jobsheet* myJobsheet = receptionist.getJobsheet(); 
 	myServiceRecord = receptionist.getServiceRecord(); 
 	printf("Customer recieved transaction papers....\n");
@@ -54,9 +50,9 @@ int main() {
 
 	printf("Press enter to pay the autoshop and get car back \n");
 	getchar();
-	myCar = receptionist.processPayment(myInvoice->totalCost);				//pay the autoshop and recieve car back
+	myCar = receptionist.processPayment(myInvoice->totalCost);				//Pay the autoshop and recieve car back
 
-	printf("Press enter to see if all tires are good to go now...\n");
+	printf("Press enter to see if all tires are good to go now...\n");		//Check to see if all tires are good (tire 4 should be replaced)
 	for (int i = 0; i < 4; i++) {
 		if (myCar->checkTire(i) == 0) {
 			printf("Tire %d is still worn and needs to be replaced \n", (i+1));
@@ -65,6 +61,9 @@ int main() {
 			printf("Tire %d is good to go \n", (i+1));
 		}
 	}
+
+	//Note: could delete car, jobsheet, service record, and invoice here to be very thourough,
+	//since at this point the customer has ownership of all of above objects (auto-shop has completely passed ownership to customer and set it's own pointers to NULL)
 
 	printf("Hit enter to exit \n");
 	getchar(); 

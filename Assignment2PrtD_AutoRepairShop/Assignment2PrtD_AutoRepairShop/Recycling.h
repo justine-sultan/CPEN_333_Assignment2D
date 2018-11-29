@@ -9,11 +9,11 @@
 class Recycling
 {
 public:
-	Recycling();
-	~Recycling();
+	Recycling();								//Constructor
+	~Recycling();								//Destructor
 
-	void recycleOil(struct oil* oldOil); 
-	void recycleTire(Tire* oldTire); 
+	void recycleOil(struct oil* oldOil);		//Input: Oil oil. Recyles old oil (deletes the struct)
+	void recycleTire(Tire* oldTire);			//Input: old tire. Recylces old tire (deletes the object)
 };
 
 #endif 
