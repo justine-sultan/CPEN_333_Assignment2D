@@ -6,6 +6,7 @@
 #include <string.h>
 //#include <Windows.h>
 #include "..\DataStructures.h"
+#include "..\rt.h"
 
 Receptionist::Receptionist()
 {
@@ -65,8 +66,16 @@ void Receptionist::stampServiceRecord(void) {
 }
 
 void Receptionist::getCarServiced(Car* custCarP, struct serviceRecord* custServiceRecordP) {
+	//todo: this will use a pipeline to send data to main() where everything else will be processed
 	printf("Receptionist getting car and service record \n");
 	getchar();
+	CPipe custToRec("custToRec", 1024);
+	custToRec.Write(&custCarP, sizeof(custCarP));
+	printf("Customer hands over car \n");
+	getchar(); 
+	custToRec.Write(&custServiceRecordP, sizeof(custServiceRecordP));
+	printf("Customer hands over service record \n"); 
+	/*
 	custServiceRecord = custServiceRecordP; 
 	custCar = custCarP; 
 	printf("Receptionist sending car to technician\n");
@@ -80,21 +89,38 @@ void Receptionist::getCarServiced(Car* custCarP, struct serviceRecord* custServi
 	generateInvoice();
 	stampServiceRecord();
 	printf("Receptionist ready to hand off to customer\n");
-	getchar();
+	getchar();*/
 
 	return; 
 }
 
 struct invoice* Receptionist::getInvoice(void) {
-	return custInvoice; 
+	//Todo: this will just wait on the pipeline for the receptionist to send the below info, get the info, then return it
+	//same with the other 3
+	CPipe recToCust("recToCust", 1024);
+	struct invoice* temp; 
+	recToCust.Read(&temp, sizeof(temp));
+	return temp;
+
+	//return custInvoice; 
 }
 
 Jobsheet* Receptionist::getJobsheet(void) {
-	return custJobSheet;
+	CPipe recToCust("recToCust", 1024);
+	Jobsheet* temp;
+	recToCust.Read(&temp, sizeof(temp));
+	return temp;
+
+	//return custJobSheet;
 }
 
 struct serviceRecord* Receptionist::getServiceRecord(void) {
-	return custServiceRecord;
+	CPipe recToCust("recToCust", 1024);
+	struct serviceRecord* temp;
+	recToCust.Read(&temp, sizeof(temp));
+	return temp;
+
+	//return custServiceRecord;
 }
 
 Car* Receptionist::processPayment(float payment) {
@@ -113,4 +139,44 @@ Car* Receptionist::processPayment(float payment) {
 		custCar = nullptr;				//assume that customer has taken car back
 		return temp; 
 	}
+}
+
+int Receptionist::main(void)
+{
+	CPipe custToRec("custToRec", 1024); 
+	CPipe recToCust("recToCust", 1024);
+	//CPipe techToRec("techToRec", 1024);
+	//CPipe recToTech("recToTech", 1024);
+	
+	while (1) {
+		custToRec.Read(&custCar, sizeof(custCar));
+		printf("Receptionist recieves car \n");
+		custToRec.Read(&custServiceRecord, sizeof(custServiceRecord));
+		printf("Receptionist recieves service record \n");
+
+		printf("Receptionist sending car to technician\n");
+		getchar();
+		technician->serviceCar(custCar);
+		for (int i = 0; i <100; i++) {
+			makeCoffee();
+			Sleep(100);
+		}
+		
+		printf("Receptionist retrieving car and jobsheet from technician\n");
+		getchar();
+		custCar = technician->getCar();
+		custJobSheet = technician->getJobSheet();
+		generateInvoice();
+		stampServiceRecord();
+		printf("Receptionist ready to hand off to customer\n");
+		getchar();
+
+		recToCust.Write(&custInvoice, sizeof(custInvoice));
+		recToCust.Write(&custJobSheet, sizeof(custJobSheet));
+		recToCust.Write(&custServiceRecord, sizeof(custServiceRecord));
+
+
+	}
+
+	return(0);
 }

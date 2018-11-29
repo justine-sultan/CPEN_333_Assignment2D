@@ -42,6 +42,9 @@
     <ClInclude Include="..\DataStructures.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\rt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Receptionist.cpp">
@@ -69,6 +72,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\rt.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

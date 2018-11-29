@@ -9,8 +9,9 @@
 #include "Technician.h"
 #include <string.h>
 #include "..\DataStructures.h"
+#include "..\rt.h"
 
-class Receptionist
+class Receptionist : public ActiveClass
 {
 private:
 	//associations:
@@ -24,6 +25,8 @@ private:
 	void makeCoffee(void);
 	void generateInvoice(void); 
 	void stampServiceRecord(void); 
+
+	int main(void);
 
 public:
 	Receptionist();

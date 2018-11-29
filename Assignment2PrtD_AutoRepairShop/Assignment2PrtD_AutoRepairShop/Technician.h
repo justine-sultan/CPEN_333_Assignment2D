@@ -10,8 +10,9 @@
 #include "Recycling.h"
 #include "Stores.h"
 #include "..\DataStructures.h"
+#include "..\rt.h"
 
-class Technician
+class Technician : public ActiveClass
 {
 private:
 	//associations:
@@ -20,6 +21,8 @@ private:
 	Garbage* garbage;
 	Recycling* recycling;
 	Stores* stores;
+
+	int main(void);
 
 public:
 	Technician();

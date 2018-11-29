@@ -116,6 +116,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\DataStructures.h" />
+    <ClInclude Include="..\rt.h" />
     <ClInclude Include="Car.h" />
     <ClInclude Include="Garbage.h" />
     <ClInclude Include="Jobsheet.h" />
@@ -126,6 +127,7 @@
     <ClInclude Include="Tire.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\rt.cpp" />
     <ClCompile Include="Car.cpp" />
     <ClCompile Include="Garbage.cpp" />
     <ClCompile Include="Jobsheet.cpp" />

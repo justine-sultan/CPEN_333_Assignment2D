@@ -9,10 +9,13 @@
 #include "Car.h"
 #include "Receptionist.h"
 #include "..\DataStructures.h"
+#include "..\rt.h"
 
 int main() {
 	Receptionist receptionist;				//create the auto shop
+	receptionist.Resume(); 
 	Technician technician;
+	technician.Resume(); 
 	Garbage garbage;
 	Recycling recycling;
 	Stores stores;
@@ -32,7 +35,8 @@ int main() {
 	getchar(); 
 
 	receptionist.getCarServiced(myCar, myServiceRecord);			//car gets serviced
-	
+	printf("Customer waiting for car to be serviced \n");
+
 	struct invoice* myInvoice = receptionist.getInvoice();			//get transaction documents back 
 	Jobsheet* myJobsheet = receptionist.getJobsheet(); 
 	myServiceRecord = receptionist.getServiceRecord(); 
