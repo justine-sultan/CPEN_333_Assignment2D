@@ -22,6 +22,7 @@ public:
 
 	void addTires(char* make, int size);		//will add 4 tires
 	Tire* swapTire(int tireNum, Tire* newTire);	//will swap out 1 tire
+	Tire* removeTire(int tireNum);				//will remove 1 tire
 	
 	struct oil* swapOil(struct oil* newOil);
 	int* swapOilFilter(int* newOilFilter);

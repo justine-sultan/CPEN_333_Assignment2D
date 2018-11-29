@@ -55,6 +55,14 @@ Tire* Car::swapTire(int tireNum, Tire* newTire)
 
 }
 
+Tire* Car::removeTire(int tireNum)
+{
+	printf("Removing Tire %d from car \n", (tireNum + 1));
+	Tire* temp = tireArray[tireNum];
+	tireArray[tireNum] = nullptr;
+	return temp; 
+}
+
 struct oil* Car::swapOil(struct oil* newOil)
 {
 	printf("Swapping Oil. \n");

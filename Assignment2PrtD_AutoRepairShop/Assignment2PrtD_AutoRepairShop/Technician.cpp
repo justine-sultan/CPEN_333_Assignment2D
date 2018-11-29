@@ -51,6 +51,17 @@ void Technician::swapAssociations(Garbage* garbageP, Recycling* recyclingP, Stor
 	return;
 }
 
+Jobsheet* Technician::addJobSheet(void)
+{
+	Jobsheet* custJobsheet = new Jobsheet;
+	return custJobsheet; 
+}
+
+void Technician::deleteJobsheet(Jobsheet* jobsheetP) 
+{
+	delete jobsheetP; 
+}
+
 
 void Technician::serviceCar(Car* custCarP) {
 	printf("Technician getting car \n");
@@ -140,7 +151,8 @@ int Technician::main(void)
 
 	printf("Technician creating jobsheet.....\n");
 	getchar();
-	custJobsheet = new Jobsheet; 
+	custJobsheet = addJobSheet(); 
+	//custJobsheet = new Jobsheet; 
 	//custCar = custCarP; 
 
 	printf("Technician getting oil, air filter, and oil filter.....\n");

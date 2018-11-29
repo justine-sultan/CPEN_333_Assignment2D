@@ -31,6 +31,8 @@ public:
 	void addAsociations(Garbage* garbageP = nullptr, Recycling* recyclingP = nullptr, Stores* storesP = nullptr);
 	void swapAssociations(Garbage* garbageP = nullptr, Recycling* recyclingP = nullptr, Stores* storesP = nullptr, 
 		                 Garbage* newgarbageP = nullptr, Recycling* newrecyclingP = nullptr, Stores* newstoresP = nullptr);
+	Jobsheet* addJobSheet(void);
+	void deleteJobsheet(Jobsheet* jobsheetP);
 
 	void serviceCar(Car* custCarP);
 	Car* getCar(void); 
