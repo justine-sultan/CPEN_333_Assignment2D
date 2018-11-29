@@ -44,21 +44,20 @@ Technician* Receptionist::swapTechnician(Technician* techP) {
 void Receptionist::generateInvoice(void) {
 	custInvoice = new struct invoice;
 	
-	printf("Receptionist making Invoice...\n");
-	//char myName[10] = "John_Blah";
+	printf("Receptionist making invoice...\n");
 	strcpy_s(custInvoice->ownerName, 18, custServiceRecord->ownerName);
 	char myShop[10] = "Auto_Shop";
 	strcpy_s(custInvoice->shopName, 18, myShop);
 	custInvoice->totalCost = custJobSheet->getTotalCost();
 
-	printf("Invoice Onwner name: %s,  Shop name: %s,  Total cost: %f", custInvoice->ownerName, custInvoice->shopName, custInvoice->totalCost);
+	printf("Invoice: Owner name: %s,  Shop name: %s,  Total cost: %0.2f \n", custInvoice->ownerName, custInvoice->shopName, custInvoice->totalCost);
 	getchar();
 
 	return; 
 }
 
 void Receptionist::stampServiceRecord(void) {
-	printf("Receptionist stamping Invoice...previous number of services = %d \n", custServiceRecord->numberOfStamps);
+	printf("Receptionist stamping invoice...previous number of services = %d \n", custServiceRecord->numberOfStamps);
 	custServiceRecord->numberOfStamps++;
 	printf("Current number of stamps/number of services: %d \n", custServiceRecord->numberOfStamps);
 	getchar();
@@ -71,10 +70,7 @@ void Receptionist::getCarServiced(Car* custCarP, struct serviceRecord* custServi
 	getchar();
 	CPipe custToRec("custToRec", 1024);
 	custToRec.Write(&custCarP, sizeof(custCarP));
-	printf("Customer hands over car \n");
-	getchar(); 
 	custToRec.Write(&custServiceRecordP, sizeof(custServiceRecordP));
-	printf("Customer hands over service record \n"); 
 	/*
 	custServiceRecord = custServiceRecordP; 
 	custCar = custCarP; 
@@ -150,19 +146,17 @@ int Receptionist::main(void)
 	
 	while (1) {
 		custToRec.Read(&custCar, sizeof(custCar));
-		printf("Receptionist recieves car \n");
 		custToRec.Read(&custServiceRecord, sizeof(custServiceRecord));
-		printf("Receptionist recieves service record \n");
 
 		printf("Receptionist sending car to technician\n");
 		getchar();
 		technician->serviceCar(custCar);
-		for (int i = 0; i <100; i++) {
+		for (int i = 0; i <3; i++) {
 			makeCoffee();
-			Sleep(100);
+			Sleep(8000);
 		}
 		
-		printf("Receptionist retrieving car and jobsheet from technician\n");
+		printf("Receptionist done making coffee and will get car and jobsheet from technician as soon as they are ready\n");
 		getchar();
 		custCar = technician->getCar();
 		custJobSheet = technician->getJobSheet();
@@ -174,7 +168,6 @@ int Receptionist::main(void)
 		recToCust.Write(&custInvoice, sizeof(custInvoice));
 		recToCust.Write(&custJobSheet, sizeof(custJobSheet));
 		recToCust.Write(&custServiceRecord, sizeof(custServiceRecord));
-
 
 	}
 

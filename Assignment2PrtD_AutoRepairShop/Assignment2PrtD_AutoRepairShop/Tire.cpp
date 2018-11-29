@@ -18,13 +18,11 @@ Tire::Tire(int status, char* makeP, int sizeP)
 
 Tire::~Tire()
 {
-	printf("Destroying tire object \n");
+	printf("Tire destructer being entered...destroying tire object \n");
 	getchar();
 	return; 
 }
 
 int Tire::getTireStatus(void) {
-	printf("Returning tire status \n");
-	getchar(); 
 	return tireStatus; 
 }

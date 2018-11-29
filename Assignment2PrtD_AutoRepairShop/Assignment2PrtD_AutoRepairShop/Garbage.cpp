@@ -14,12 +14,14 @@ Garbage::Garbage()
 Garbage::~Garbage()
 {
 	printf("Destroying garbage object \n");
+	getchar();
 	return;
 }
 
 void Garbage::disposeFilter(int* filter)
 {
-	printf("Destroying filter \n"); 
+	printf("Disposing of filter \n"); 
+	getchar();
 	delete filter;
 	return;
 }

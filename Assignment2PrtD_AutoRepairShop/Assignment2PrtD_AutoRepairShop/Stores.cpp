@@ -20,7 +20,7 @@ Stores::~Stores()
 }
 
 struct oil* Stores::getOil(int type, int amount) {
-	printf("New oil taken out of stores. Type = %d and amount =%d \n", type, amount);
+	printf("New oil taken out of stores. Type = %d and amount = %d \n", type, amount);
 	getchar(); 
 	struct oil* temp = new oil;
 	temp->amount = amount;
@@ -45,7 +45,7 @@ int* Stores::getOilFilter(void) {
 }
 
 Tire* Stores::getTire(char* make, int size, int status) {
-	printf("New tire taken out of stores. Make=%s, size=%d, and status=%d \n", make, size, status);
+	printf("New tire taken out of stores. Make = %s, size = %d, and status = %d \n", make, size, status);
 	getchar();
 	Tire* temp = new Tire(status, make, size);
 	return temp; 

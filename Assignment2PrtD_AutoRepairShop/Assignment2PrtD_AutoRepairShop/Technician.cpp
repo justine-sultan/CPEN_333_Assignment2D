@@ -138,12 +138,12 @@ int Technician::main(void)
 	while (1) {
 	recToTech.Read(&custCar, sizeof(custCar)); 
 
-	printf("Technician creating jobsheet \n");
+	printf("Technician creating jobsheet.....\n");
 	getchar();
 	custJobsheet = new Jobsheet; 
 	//custCar = custCarP; 
 
-	printf("Technician getting oil, airfilter, and oilfilter \n");
+	printf("Technician getting oil, air filter, and oil filter.....\n");
 	getchar();
 	struct oil* newOil = stores->getOil(8,10); 
 	custJobsheet->addItem(newOil->type, newOil->amount = 5, 5.00);
@@ -152,7 +152,7 @@ int Technician::main(void)
 	int* oilFilter = stores->getOilFilter();
 	custJobsheet->addItem(*oilFilter, 1, 10.00);
 
-	printf("Technician swapping oil, airfilter, and oilfilter \n");
+	printf("Technician swapping oil, air filter, and oil filter.....\n");
 	getchar();
 	struct oil* oldOil = custCar->swapOil(newOil);
 	recycling->recycleOil(oldOil);
@@ -167,7 +167,7 @@ int Technician::main(void)
 	char job3[5] = "OIFC";
 	custJobsheet->addLabourItem(job3, 5.00);
 
-	printf("Technician checking Tires \n");
+	printf("Technician checking tires.....\n");
 	getchar();
 	for (int i = 0; i < 4; i++) {
 		int tireStatus = custCar->checkTire(i);

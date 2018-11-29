@@ -23,7 +23,7 @@ Jobsheet::~Jobsheet()
 
 void Jobsheet::addItem(int partNumber, int quantity, float cost) {
 	printf("The following part line item added to jobsheet: \n");
-	printf("Part Number: %d    Quantity:%d    Cost:%f \n", partNumber, quantity, cost);
+	printf("Part Number: %d    Quantity:%d    Cost:%0.2f \n", partNumber, quantity, cost);
 	getchar();
 	totalCost += cost; 
 	return; 
@@ -31,7 +31,7 @@ void Jobsheet::addItem(int partNumber, int quantity, float cost) {
 
 void Jobsheet::addLabourItem(char name[4], float cost) {
 	printf("The following labour line item added to jobsheet: \n");
-	printf("Name: %s    Cost:%f \n", name, cost);
+	printf("Name: %s    Cost:%0.2f \n", name, cost);
 	getchar();
 	totalCost += cost;
 	return;

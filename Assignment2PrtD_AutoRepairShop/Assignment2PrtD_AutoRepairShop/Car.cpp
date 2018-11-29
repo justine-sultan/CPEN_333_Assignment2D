@@ -8,7 +8,7 @@
 
 Car::Car()
 {
-	printf("Creating car object....\n");
+	printf("Creating car object with the following components....\n");
 	Oil = new struct oil;
 	oilFilter = new int;
 	airFilter = new int; 
@@ -16,8 +16,8 @@ Car::Car()
 	Oil->type = 5; 
 	*oilFilter = 2;
 	*airFilter = 3;
-	printf("Oil type:%d, Oil amount:%d,Oil Filter Type: %d, Oil Filter Amount: %d \n", Oil->amount, Oil->type, *oilFilter, *airFilter);
-	printf("Car currently does not have tires. Please add tires...\n"); 
+	printf("Oil type: %d     Oil amount: %d \nOil Filter Type: %d     Oil Filter Amount: %d \n", Oil->amount, Oil->type, *oilFilter, *airFilter);
+	printf("Car currently does not have tires. Please add tires....\n"); 
 	for (int i = 0; i < 4; i++) {
 		tireArray[i] = nullptr; 
 	}
@@ -47,7 +47,7 @@ void Car::addTires(char* make, int size)
 
 Tire* Car::swapTire(int tireNum, Tire* newTire)
 {
-	printf("Swapping Tire %d \n", tireNum);
+	printf("Swapping Tire %d \n", (tireNum+1));
 	getchar();
 	Tire* temp = tireArray[tireNum];
 	tireArray[tireNum] = newTire; 
@@ -58,20 +58,20 @@ Tire* Car::swapTire(int tireNum, Tire* newTire)
 struct oil* Car::swapOil(struct oil* newOil)
 {
 	printf("Swapping Oil. \n");
-	getchar();
 	struct oil* temp;
 	temp = Oil;
 	Oil = newOil;
 	printf("New oil put in car.\n");
+	getchar();
 	return temp; 
 }
 
 int* Car::swapOilFilter(int* newOilFilter) {
 	printf("Swapping oil filter \n");
-	getchar();
 	int* temp = oilFilter;
 	oilFilter = newOilFilter;
 	printf("New oil filter put in car.\n");
+	getchar();
 	return temp; 
 }
 
@@ -85,16 +85,16 @@ int* Car::swapAirFilter(int* newAirFilter) {
 }
 
 int Car::checkTire(int tireNum) {
-	printf("Checking Tire %d....", tireNum);
+	printf("Checking Tire %d....", (tireNum+1));
 	getchar();
 	int retVal = tireArray[tireNum]->getTireStatus();
-	printf("Tire %d status is %d  (0=worn, 1=good) \n", tireNum, retVal);
+	printf("Tire %d status is %d  (0: worn, 1: good) \n", (tireNum+1), retVal);
 	getchar(); 
 	return retVal; 
 }
 
 void Car::rotateTire(int tireNum) {
-	printf("Rotating tire %d...", tireNum);
+	printf("Rotating tire %d...", (tireNum+1));
 	getchar();
 	return; 
 }
